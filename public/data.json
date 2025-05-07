@@ -1,0 +1,149 @@
+{
+    "data":{
+        "switchs":[
+            {
+                "ip":"10.100.12.1",
+                "ports":[
+                    {
+                        "id": 1,
+                        "name": "1",
+                        "VLAN": "50",
+                        "PDV":"Câmera X",
+                        "IP":"10.100.51.35"
+                    },
+                    {
+                        "id": 2,
+                        "name": "2",
+                        "VLAN": "50",
+                        "PDV":"Câmera X",
+                        "IP":""
+                    },            
+                    {
+                        "id": 3,
+                        "name": "3",
+                        "VLAN": "50",
+                        "PDV":"Down",
+                        "IP":""
+                    },
+                    {
+                        "id": 5,
+                        "name": "5",
+                        "VLAN": "50",
+                        "PDV":"Down",
+                        "IP":""
+                    },
+                    {
+                        "id": 9,
+                        "name": "9",
+                        "VLAN": "51",
+                        "PDV":"Catraca 03",
+                        "IP":"10.100.51.35"
+                    },
+                    {
+                        "id": 10,
+                        "name": "10",
+                        "VLAN": "51",
+                        "PDV":"Catraca 04",
+                        "IP":"10.100.51.36"
+                    },
+                    {
+                        "id": 11,
+                        "name": "11",
+                        "VLAN": "51",
+                        "PDV":"Catraca 02",
+                        "IP":"10.100.51.34"
+                    },
+                    {
+                        "id": 12,
+                        "name": "12",
+                        "VLAN": "51",
+                        "PDV":"Coney Island",
+                        "IP":"DHCP"
+                    },
+                    {
+                        "id": 13,
+                        "name": "13",
+                        "VLAN": "51",
+                        "PDV":"Catraca 01",
+                        "IP":"10.100.51.33"
+                    },
+                    {
+                        "id": 14,
+                        "name": "14",
+                        "VLAN": "51",
+                        "PDV":"Servidor WakeOnMe",
+                        "IP":"DHCP"
+                    },
+                    {
+                        "id": 15,
+                        "name": "15",
+                        "VLAN": "54",
+                        "PDV":"NOTEBOOK TI VILA",
+                        "IP":"DHCP"
+                    },
+                    {
+                        "id": 16,
+                        "name": "16",
+                        "VLAN": "54",
+                        "PDV":"PC TI VILA",
+                        "IP":"DHCP"
+                    },
+                    {
+                        "id": 17,
+                        "name": "17",
+                        "VLAN": "54",
+                        "PDV":"Servidor WakeOnMe",
+                        "IP":"DHCP"
+                    },
+                    {
+                        "id": 21,
+                        "name": "21",
+                        "VLAN": "12",
+                        "PDV":"AP Palco Vila",
+                        "IP":"10.100.12.33"
+                    },
+                    {
+                        "id": 22,
+                        "name": "22",
+                        "VLAN": "12",
+                        "PDV":"AP Catraca Suites",
+                        "IP":"10.100.12.34"
+                    },
+                    {
+                        "id": 23,
+                        "name": "23",
+                        "VLAN": "55",
+                        "PDV":"Automação",
+                        "IP":"DHCP"
+                    },
+                    {
+                        "id": 45,
+                        "name": "45",
+                        "VLAN": "12",
+                        "PDV":"AP Ubiquiti Sala TI Vila",
+                        "IP":"DHCP"
+                    },
+                    {
+                        "id": 47,
+                        "name": "47",
+                        "VLAN": "54",
+                        "PDV":"UP-LINK-HBP-CATRACA",
+                        "IP":"DHCP"
+                    }
+                ]
+            },
+            {
+                "ip":"10.100.12.2",
+                "ports":[
+                    {
+                        "id": 1,
+                        "name": "1",
+                        "VLAN": "50",
+                        "PDV":"Câmera X",
+                        "IP":"10.100.51.35"
+                    }                    
+                ]
+            }
+        ]
+    }
+}

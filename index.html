@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Arrastar SVG com Zoom</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div class="container" id="container">
+      <div class="svg-wrapper" id="svgWrapper">
+        <img src="Desktop.svg" onload="fetchSvg(this)" />
+      </div>
+    </div>
+
+    <div class="alert"><a class="btnZomm" id="zDown">+</a>Zoom<a class="btnZomm" id="zOut">-</a></div>
+
+    <div class="showResult">
+
+
+
+    </div>
+
+    <script defer>
+
+
+      // Variables
+      const btnZoomDown = document.querySelector('#zDown')
+      const btnZoomOut = document.querySelector('#zOut')
+      const switchForm = document.querySelector('.svg-wrapper')
+      let zoomLevel = 1.5;
+
+      const showResult = document.querySelector('.showResult')
+      
+
+      // Scroll com clique e arraste
+      const container = document.getElementById("container");
+      let isDragging = false;
+      let startX, startY, scrollLeft, scrollTop;
+
+      const estados = [];
+
+      const fetchSvg = (image) => {
+        fetch(image.src)
+          .then((response) => response.text())
+          .then((response) => {
+            const span = document.createElement("span");
+            span.innerHTML = response;
+            const inlineSvg = span.querySelector("svg");
+            image.parentNode.replaceChild(inlineSvg, image);
+            return true;
+          })
+          .then(() => {
+            getActions();
+          });
+      };
+
+      const getActions = () => {
+
+         const elementos =  document.querySelectorAll("a");
+
+         elementos.forEach( async (el,pos) => {
+             const resultData = await fetchData();
+             const result = resultData.find((value) => value.name === el.id);
+             if(!result && el.className != "btnZomm" && el.classList.value != "portEth"){
+                el.style.display = "none";
+             }
+            el.onclick = () => stateClicked(el);
+        });
+      };
+
+      const stateClicked = async (state) => {
+        const id = state.id
+
+        const resultData = await fetchData();
+        const resultPdvs = await fetchPDVs();
+        
+        
+        const result = resultData.find((value) => value.name === id);
+
+        if (result) {
+            showResult.classList.add("Show");
+            showResult.innerHTML = `
+                <div>
+                  <div>Porta: ${id}</div>
+                  <div>PDV: ${result.PDV}</div>
+                  <div>VLAN: ${result.VLAN}</div>
+                  <div>IP: ${result.IP}</div>
+                  <label>LOCAL:
+                  <input list="Local"  value="${result.PDV}" />
+                    <datalist id="Local">
+                    </datalist>
+                  </label>
+                </div>    
+            `;
+            const datalist = document.getElementById("Local");
+            console.log(resultPdvs)
+            resultPdvs.forEach(namePdvs => {
+              const option = document.createElement("option");
+              option.value = namePdvs.name;
+              console.log(option)
+              datalist.appendChild(option);
+            });
+
+        } else {
+            showResult.innerHTML = '';    
+        }
+      };
+        
+      const fetchData = async () => {
+            try {
+                const response = await fetch('./data.json');
+                const data = await response.json();
+                return data.data.switchs[0].ports;
+            } catch (error) {
+                console.error('Erro ao carregar o JSON:', error);
+            }
+        };
+  
+      const fetchPDVs = async ()=>{
+        try {
+                const response = await fetch('./Pdvs.json');
+                const data = await response.json();
+                return data.data;
+            } catch (error) {
+                console.error('Erro ao carregar o JSON:', error);
+            }
+      }
+          
+      btnZoomDown.addEventListener('click', (e) => {
+        e.preventDefault();
+        zoomLevel += 0.4; // Aumenta o zoom
+        switchForm.style.transform = `scale(${zoomLevel})`;
+        });
+
+      btnZoomOut.addEventListener('click', (e) => {
+        e.preventDefault();
+        zoomLevel -= 0.4; // Diminui o zoom
+        switchForm.style.transform = `scale(${zoomLevel})`;
+        });
+
+      container.addEventListener("mousedown", (e) => {
+        console.log(container.scrollLeft);
+        console.log(container.scrollTop);
+        isDragging = true;
+        container.classList.add("dragging");
+        startX = e.pageX - container.offsetLeft;
+        startY = e.pageY - container.offsetTop;
+        scrollLeft = container.scrollLeft;
+        scrollTop = container.scrollTop;
+      });
+
+      container.addEventListener("mouseleave", () => {
+        isDragging = false;
+        container.classList.remove("dragging");
+      });
+
+      container.addEventListener("mouseup", () => {
+        isDragging = false;
+        container.classList.remove("dragging");
+      });
+
+      container.addEventListener("mousemove", (e) => {
+        if (!isDragging) return;
+        e.preventDefault();
+        const x = e.pageX - container.offsetLeft;
+        const y = e.pageY - container.offsetTop;
+        const walkX = x - startX;
+        const walkY = y - startY;
+        container.scrollLeft = scrollLeft - walkX;
+        container.scrollTop = scrollTop - walkY;
+      });
+
+      window.addEventListener("load", () => {
+        const content = document.querySelector(".svg-wrapper");
+
+        const centerX = (content.scrollWidth - container.clientWidth) / 2;
+        const centerY = (content.scrollHeight - container.clientHeight) / 2;
+
+        container.scrollLeft = centerX - 100;
+        container.scrollTop = centerY - 100;
+        console.log(centerX, centerY);
+        container.scrollLeft = 600; // scroll horizontal
+        container.scrollTop = 600; // opcional: scroll vertical
+      });
+      
+      document.addEventListener('click', (e) => {
+        // se o clique não foi em um <a> e nem dentro de .showResult
+        if (!e.target.closest('a') && !e.target.closest('.showResult')) {
+            showResult.classList.remove("Show");
+            showResult.innerHTML = '';
+        }
+        });
+    </script>
+  </body>
+</html>

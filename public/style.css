@@ -1,0 +1,75 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+  }
+
+  body {
+    font-family: sans-serif;
+  }
+  img, svg {
+    -webkit-user-drag: none; /* Chrome */
+    pointer-events: auto;    /* mantém os cliques funcionando */
+  }
+  .container {
+    width: 95vw;
+    height: 80vh;
+    overflow: auto;
+    border: 2px solid #000;
+    cursor: grab;
+    margin: 20px auto;
+  }
+
+  .container:active {
+    cursor: grabbing;
+  }
+
+  .svg-wrapper {
+    transform: scale(1.5);
+    transform-origin: top left;
+    width: fit-content;
+    user-select: none;
+  }
+
+  svg {
+    pointer-events: auto;
+  }
+
+  .alert {
+    margin-top: 20px;
+    text-align: center;
+  }
+.btnZomm{
+    padding: 5px;
+    background-color: #ece1e1;
+    border-radius: 4px;
+    width: 20px;
+    cursor: pointer;
+}
+
+.btnRj45:hover{
+    cursor: pointer;
+    box-shadow: 10px 10px 10px #000;
+}
+
+.showResult.Show{
+  padding: 6rem 2rem;
+  background-color: #201f21fa;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 5px;
+  color: #FFF;
+  border: 10px #afaba7 ridge;
+}
+.showResult div{
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  gap: 2rem;
+  font-family: monospace;
+  font-size: 16px;
+  letter-spacing: 4px;
+}
