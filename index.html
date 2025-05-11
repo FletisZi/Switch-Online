@@ -7,6 +7,14 @@
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
+    <div>
+      <label for="cidade">Escolha uma Switch:</label>
+      <input list="datalistSwitchs" id="datalistSwitch" name="datalistSwitch" />
+      <datalist id="datalistSwitchs">  
+      </datalist>
+      <button onclick="testee()">Search</button>
+    </div>
+
     <div class="container" id="container">
       <div class="svg-wrapper" id="svgWrapper">
         <img src="Desktop.svg" onload="fetchSvg(this)" />
@@ -21,9 +29,8 @@
 
     </div>
 
-    <script defer>
-
-
+    <script defer> 
+    
       // Variables
       const btnZoomDown = document.querySelector('#zDown')
       const btnZoomOut = document.querySelector('#zOut')
@@ -51,54 +58,60 @@
             return true;
           })
           .then(() => {
-            getActions();
+            getActions(0);
           });
       };
 
-      const getActions = () => {
+      const getActions = (id_switch) => {
 
          const elementos =  document.querySelectorAll("a");
 
          elementos.forEach( async (el,pos) => {
-             const resultData = await fetchData();
+             if(el.className != "btnZomm" && el.classList.value != "portEth"){
+                el.style.display = "flex";
+             }
+            
+        });
+
+         elementos.forEach( async (el,pos) => {
+             const resultData = await fetchData(id_switch);
              const result = resultData.find((value) => value.name === el.id);
              if(!result && el.className != "btnZomm" && el.classList.value != "portEth"){
                 el.style.display = "none";
+
              }
-            el.onclick = () => stateClicked(el);
+            el.onclick = () => stateClicked(el,id_switch);
         });
       };
 
-      const stateClicked = async (state) => {
+      const stateClicked = async (state,id_switch) => {
         const id = state.id
 
-        const resultData = await fetchData();
+        const resultData = await fetchData(id_switch);
         const resultPdvs = await fetchPDVs();
         
         
         const result = resultData.find((value) => value.name === id);
-
         if (result) {
             showResult.classList.add("Show");
             showResult.innerHTML = `
                 <div>
                   <div>Porta: ${id}</div>
-                  <div>PDV: ${result.PDV}</div>
-                  <div>VLAN: ${result.VLAN}</div>
-                  <div>IP: ${result.IP}</div>
+                  <div>PDV: ${result.pdv}</div>
+                  <div>VLAN: ${result.vlan}</div>
+                  <div>IP: ${result.ip}</div>
                   <label>LOCAL:
-                  <input list="Local"  value="${result.PDV}" />
+                    <input list="Local"  value="${result.pdv}" />
                     <datalist id="Local">
                     </datalist>
                   </label>
                 </div>    
             `;
             const datalist = document.getElementById("Local");
-            console.log(resultPdvs)
+
             resultPdvs.forEach(namePdvs => {
               const option = document.createElement("option");
               option.value = namePdvs.name;
-              console.log(option)
               datalist.appendChild(option);
             });
 
@@ -107,11 +120,11 @@
         }
       };
         
-      const fetchData = async () => {
+      const fetchData = async (id) => {
             try {
-                const response = await fetch('./data.json');
+                const response = await fetch(`http://localhost:3001/port?id=${id}`);
                 const data = await response.json();
-                return data.data.switchs[0].ports;
+                return data;
             } catch (error) {
                 console.error('Erro ao carregar o JSON:', error);
             }
@@ -171,7 +184,7 @@
         container.scrollTop = scrollTop - walkY;
       });
 
-      window.addEventListener("load", () => {
+      window.addEventListener("load", async () => {
         const content = document.querySelector(".svg-wrapper");
 
         const centerX = (content.scrollWidth - container.clientWidth) / 2;
@@ -182,6 +195,33 @@
         console.log(centerX, centerY);
         container.scrollLeft = 600; // scroll horizontal
         container.scrollTop = 600; // opcional: scroll vertical
+
+
+
+
+        ////// ------------------- etapa 
+
+        const datalistSwitchs = document.getElementById('datalistSwitchs');
+
+        const fetchSwitchs = async () => {
+          try {
+                const response = await fetch('http://localhost:3001/switch');
+                const data = await response.json();
+                return data
+            } catch (error) {
+                console.error('Erro ao carregar o JSON:', error);
+            }
+        };
+ 
+        const dataSwitchs = await fetchSwitchs();
+
+        dataSwitchs.forEach(item => {
+          const option = document.createElement('option');
+          option.value = item.nome;
+          option.setAttribute('id_Switch', item.id);
+          datalistSwitchs.appendChild(option);
+        });
+
       });
       
       document.addEventListener('click', (e) => {
@@ -191,6 +231,29 @@
             showResult.innerHTML = '';
         }
         });
+    
+      async function testee  (){
+        const datalistSwitch = document.querySelector('#datalistSwitch')
+        const options = Array.from(document.querySelectorAll('option'))
+        const selected = options.find((item) => item.value == datalistSwitch.value)
+        if(selected != undefined){
+          const selectedSwitch = selected.getAttribute('id_switch')
+          getActions(selectedSwitch)
+          const listPortaSwitch = async (id) => {
+            try {
+                  const response = await fetch(`http://localhost:3001/port?id=${id}`);
+                  const data = await response.json();
+                  return data
+              } catch (error) {
+                  console.error('Erro ao carregar o JSON:', error);
+              }
+          };
+          const valor = await listPortaSwitch(selectedSwitch);
+        }else{
+          console.log('nem um valor switch encontrado !');
+        }
+      }
+    
     </script>
   </body>
 </html>

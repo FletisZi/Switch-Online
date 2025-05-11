@@ -1,13 +1,30 @@
 const express = require('express')
 const jwt = require('jsonwebtoken')
+const { executarQuery } = require('./modules/conetcDB.js');
+
 
 const app = express()
 app.use(express.json()) // permite receber JSON no body da requisição
 
 const PORT = 3001
-const SEGREDO = 'senha-super-secreta' // em apps reais, guarde isso em variáveis de ambiente
+const SEGREDO = 'rwe3Fe' // em apps reais, guarde isso em variáveis de ambiente
 
 app.use(express.static('public')); 
+
+
+const listarProdutos = async (id_switch) => {
+  const produtos = await executarQuery(`SELECT * FROM port WHERE id_switch = ${id_switch}`);
+  console.log(produtos);
+  return produtos;
+};
+
+const listarSwitchs = async () => {
+  const produtos = await executarQuery(`SELECT * FROM switch`);
+  console.log(produtos);
+  return produtos;
+};
+
+
 
 // Simulação de "banco de dados"
 const usuarioFalso = {
@@ -51,6 +68,23 @@ app.get('/perfil', autenticarToken, (req, res) => {
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/index.html');
 })
+
+app.get('/port', async(req,res) =>{
+  const id_switch = req.query.id;
+  const listaProdutos = await listarProdutos(id_switch);
+
+  if(listaProdutos.length != 0){
+    res.status(200).send( listaProdutos)
+    return
+  }
+    res.status(200).send( [])
+})
+
+app.get('/switch',async (req,res)=>{
+  res.send( await listarSwitchs())
+})
+
+
 
 app.listen(PORT, () => {
   console.log(`✅ Servidor rodando em http://localhost:${PORT}`)
