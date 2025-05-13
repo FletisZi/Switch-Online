@@ -73,3 +73,26 @@
   font-size: 16px;
   letter-spacing: 4px;
 }
+
+.wrapper-list-Switch{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 10px 0px;
+  font-family: monospace;
+  font-size: 1.25rem;
+  flex-direction: column;
+}
+
+.wrapper-list-Switch input{
+  font-family: monospace;
+  font-size: 1.25rem;
+}
+
+.wrapper-list-Switch button{
+  font-family: monospace;
+  font-size: 1.25rem;
+  padding: 4px 5px;
+}

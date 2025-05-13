@@ -3,16 +3,18 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Arrastar SVG com Zoom</title>
+    <title>Switchs HotBeach Parque !</title>
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
-    <div>
+    <div class="wrapper-list-Switch">
       <label for="cidade">Escolha uma Switch:</label>
-      <input list="datalistSwitchs" id="datalistSwitch" name="datalistSwitch" />
-      <datalist id="datalistSwitchs">  
-      </datalist>
-      <button onclick="testee()">Search</button>
+      <div>
+        <input list="datalistSwitchs" id="datalistSwitch" name="datalistSwitch" />
+        <datalist id="datalistSwitchs">  
+        </datalist>
+        <button onclick="testee()">Search</button>
+      </div>
     </div>
 
     <div class="container" id="container">
@@ -89,9 +91,8 @@
 
         const resultData = await fetchData(id_switch);
         const resultPdvs = await fetchPDVs();
-        
-        
         const result = resultData.find((value) => value.name === id);
+
         if (result) {
             showResult.classList.add("Show");
             showResult.innerHTML = `
@@ -101,7 +102,7 @@
                   <div>VLAN: ${result.vlan}</div>
                   <div>IP: ${result.ip}</div>
                   <label>LOCAL:
-                    <input list="Local"  value="${result.pdv}" />
+                    <input list="Local"  value="${result.PDV}" />
                     <datalist id="Local">
                     </datalist>
                   </label>
@@ -122,7 +123,7 @@
         
       const fetchData = async (id) => {
             try {
-                const response = await fetch(`http://localhost:3001/port?id=${id}`);
+                const response = await fetch(`http://10.100.54.144:3001/port?id=${id}`);
                 const data = await response.json();
                 return data;
             } catch (error) {
@@ -153,8 +154,6 @@
         });
 
       container.addEventListener("mousedown", (e) => {
-        console.log(container.scrollLeft);
-        console.log(container.scrollTop);
         isDragging = true;
         container.classList.add("dragging");
         startX = e.pageX - container.offsetLeft;
@@ -192,7 +191,6 @@
 
         container.scrollLeft = centerX - 100;
         container.scrollTop = centerY - 100;
-        console.log(centerX, centerY);
         container.scrollLeft = 600; // scroll horizontal
         container.scrollTop = 600; // opcional: scroll vertical
 
@@ -205,7 +203,7 @@
 
         const fetchSwitchs = async () => {
           try {
-                const response = await fetch('http://localhost:3001/switch');
+                const response = await fetch('http://10.100.54.144:3001/switch');
                 const data = await response.json();
                 return data
             } catch (error) {
@@ -241,7 +239,7 @@
           getActions(selectedSwitch)
           const listPortaSwitch = async (id) => {
             try {
-                  const response = await fetch(`http://localhost:3001/port?id=${id}`);
+                  const response = await fetch(`http://10.100.54.144:3001/port?id=${id}`);
                   const data = await response.json();
                   return data
               } catch (error) {
