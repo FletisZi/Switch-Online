@@ -13,14 +13,13 @@ const listSwitchs = async ( req ,res ) => {
 
 const addNewSwitch = async (req, res) => {
     const { nome, ip } = req.body;
-
     if (!nome || !ip ) {
         return res.status(400).json({ erro: 'Campos obrigatórios: nome, ip' });
     }
 
     try {
         const newSwitch = await SwitchModel.postSwitch({ nome, ip });
-        res.status(201).json(novoSwitch);
+        res.status(201).json(newSwitch);
     } catch (error) {
         console.error('Erro ao criar switch:', error);
         res.status(500).json({ erro: 'Erro ao cadastrar o switch' });

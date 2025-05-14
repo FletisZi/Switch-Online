@@ -1,0 +1,29 @@
+CREATE TABLE port (
+  id SERIAL PRIMARY KEY,
+  id_switch INT REFERENCES switch(id), 
+  name VARCHAR(50),
+  vlan VARCHAR(2),
+  pdv VARCHAR(100),
+  ip VARCHAR(15),
+  path_panel VARCHAR(2)
+);
+
+CREATE TABLE switch (
+  id SERIAL PRIMARY KEY,
+  nome VARCHAR(50),
+  ip VARCHAR(15)
+);
+
+
+
+
+
+
+
+
+criar nova porta
+
+Invoke-WebRequest -Uri "http://10.100.54.144:3001/port" `
+>>    -Method POST `
+>>   -Body '{"id_switch":"1","nome":"1","vlan":"54","pdv":"teste","ip":"dhcp","path_panel":"00"}' `
+>>    -ContentType "application/json"

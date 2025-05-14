@@ -2,7 +2,8 @@ const express = require('express')
 const jwt = require('jsonwebtoken')
 const { executarQuery } = require('./modules/conetcDB.js');
 const cors = require('cors');
-const SwitchController = require('./controllers/switchController.js')
+const SwitchController = require('./controllers/switchController.js');
+const portController = require('./controllers/portController.js');
 
 
 
@@ -17,10 +18,10 @@ const SEGREDO = 'rwe3Fe' // em apps reais, guarde isso em variáveis de ambiente
 app.use(express.static('public')); 
 
 
-const listarProdutos = async (id_switch) => {
-  const produtos = await executarQuery(`SELECT * FROM port WHERE id_switch = ${id_switch}`);
-  return produtos;
-};
+// const listarProdutos = async (id_switch) => {
+//   const produtos = await executarQuery(`SELECT * FROM port WHERE id_switch = ${id_switch}`);
+//   return produtos;
+// };
 
 // const listarSwitchs = async () => {
 //   const produtos = await executarQuery(`SELECT * FROM switch`);
@@ -72,16 +73,16 @@ app.get('/', (req, res) => {
     res.sendFile(__dirname + '/index.html');
 })
 
-app.get('/port', async(req,res) =>{
-  const id_switch = req.query.id;
-  const listaProdutos = await listarProdutos(id_switch);
+// app.get('/port', async(req,res) =>{
+//   const id_switch = req.query.id;
+//   const listaProdutos = await listarProdutos(id_switch);
 
-  if(listaProdutos.length != 0){
-    res.status(200).send( listaProdutos)
-    return
-  }
-    res.status(200).send( ['🔎 Não ha nem um item para esta busca!'])
-})
+//   if(listaProdutos.length != 0){
+//     res.status(200).send( listaProdutos)
+//     return
+//   }
+//     res.status(200).send( ['🔎 Não ha nem um item para esta busca!'])
+// })
 
 // app.get('/switch',async (req,res)=>{
 //   res.send( await listarSwitchs())
@@ -95,6 +96,11 @@ app.get('/switch', SwitchController.listSwitchs);
 
 app.post('/switch',SwitchController.addNewSwitch)
 
+app.get('/port', portController.listPorts)
+
+app.post('/port', portController.addNewPort)
+
 app.listen(PORT, () => {
   console.log(`✅ Servidor rodando em http://localhost:${PORT}`)
 })
+

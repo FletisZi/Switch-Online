@@ -13,7 +13,7 @@ const getAllSwitchs = async ()=>{
 const postSwitch = async ({ nome, ip}) => {
     try {
       const result = await pool.query(
-        'INSERT INTO switch (name, ip) VALUES ($1, $2) RETURNING *',
+        'INSERT INTO switch (nome, ip) VALUES ($1, $2) RETURNING *',
         [nome, ip]
       );
       return result.rows[0];
