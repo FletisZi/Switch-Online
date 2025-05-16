@@ -1,4 +1,42 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Switchs HotBeach Parque !</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <script type="module" src="/js/main.js" defer></script>
+  <body>
+    <main>
+      <section class="switch-selector">
+        <label for="switchInput">Escolha uma Switch:</label>
+        <div class="input-group">
+          <input list="switchList" id="switchInput" name="switchInput" />
+          <datalist id="switchList"></datalist>
+          <button type="button" id="btnSearch">Buscar</button>
+        </div>
+      </section>
+
+      <section class="map-container" id="container">
+        <div class="svg-wrapper" id="svgWrapper">
+          <img src="Desktop.svg" alt="Planta do Switch" id="svgImage" />
+        </div>
+      </section>
+
+      <section class="zoom-controls">
+        <button class="btnZoom" id="zDown" aria-label="Aumentar Zoom">+</button>
+        <span>Zoom</span>
+        <button class="btnZoom" id="zOut" aria-label="Diminuir Zoom">-</button>
+      </section>
+
+      <section class="result-info showResult"></section>
+    </main>
+  </body>
+
+
+</html>
+<!-- <!DOCTYPE html>
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
@@ -27,13 +65,12 @@
 
     <div class="showResult">
 
-
-
     </div>
 
     <script defer> 
     
       // Variables
+      const urlServer = "http://192.168.0.8:3001"
       const btnZoomDown = document.querySelector('#zDown')
       const btnZoomOut = document.querySelector('#zOut')
       const switchForm = document.querySelector('.svg-wrapper')
@@ -123,7 +160,7 @@
         
       const fetchData = async (id) => {
             try {
-                const response = await fetch(`http://10.100.54.144:3001/port?id=${id}`);
+                const response = await fetch(`${urlServer}/port?id=${id}`);
                 const data = await response.json();
                 return data;
             } catch (error) {
@@ -203,7 +240,7 @@
 
         const fetchSwitchs = async () => {
           try {
-                const response = await fetch('http://10.100.54.144:3001/switch');
+                const response = await fetch(`${urlServer}/switch`);
                 const data = await response.json();
                 return data
             } catch (error) {
@@ -239,7 +276,7 @@
           getActions(selectedSwitch)
           const listPortaSwitch = async (id) => {
             try {
-                  const response = await fetch(`http://10.100.54.144:3001/port?id=${id}`);
+                  const response = await fetch(`${urlServer}/port?id=${id}`);
                   const data = await response.json();
                   return data
               } catch (error) {
@@ -254,4 +291,4 @@
     
     </script>
   </body>
-</html>
+</html> -->
