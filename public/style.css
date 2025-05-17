@@ -131,7 +131,7 @@
 
 /* *********** flooter *************  */
 
-.alert {
+.zoom-controls {
     margin-top: 20px;
     text-align: center;
     display: flex;
@@ -141,7 +141,7 @@
     color: #D2D7E0;
 }
 
-.btnZomm{
+.btnZoom{
   display: inline-block;
   padding: 5px;
   background-color: #00000000;
@@ -155,7 +155,7 @@
   font-weight: 900;
 }
 
-.btnZomm:hover{
+.btnZoom:hover{
   background-color: #3e434b;
 }
 

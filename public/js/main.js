@@ -1,5 +1,8 @@
 import { getSwitchs, getPortsInSwitch } from './api.js';
 import {renderSwitch, renderPorts} from './handlesShow.js'
+import { centerSwitchShow } from './centerSwitchShow.js';
+import { zoomOut ,zoomDown } from './btnZoom.js';
+import { loadSwitchOptions } from './loadSwitchOptions.js';
 
 const switchInput = document.querySelector('#switchInput');
 const switchList = document.querySelector('#switchList');
@@ -12,7 +15,7 @@ const svgWrapper = document.getElementById('svgWrapper');
 const resultPanel = document.querySelector('.result-info');
 const image = document.getElementById('svgImage');
 
-let zoomLevel = 1.5;
+
 let isDragging = false;
 let startX, startY, scrollLeft, scrollTop;
 
@@ -21,7 +24,7 @@ btnSearch.addEventListener('click', async (e) => {
 
     //const selected = options.find((item) => item.value == datalistSwitch.value)
     const selectedOption = [...switchList.options].find(opt => opt.value === switchInput.value);
-    if (!selectedOption) return alert("Switch não encontrada!");
+    if (!selectedOption) return alert("Selecione uma opção!");
     const switchId = selectedOption.getAttribute('id_switch');
     await renderPorts(switchId);
 });
@@ -29,6 +32,8 @@ btnSearch.addEventListener('click', async (e) => {
 
 window.addEventListener('load', () => {
   renderSwitch(image);
+  centerSwitchShow();
+  loadSwitchOptions(switchList);
 });
 
 document.addEventListener('click', (e) => {
@@ -39,3 +44,16 @@ document.addEventListener('click', (e) => {
     showResult.innerHTML = '';
   }
 });
+
+zoomInBtn.addEventListener('click', (e) => {
+  e.preventDefault();
+  zoomDown(svgWrapper);
+});
+
+zoomOutBtn.addEventListener('click', (e) => {
+  e.preventDefault();
+  zoomOut(svgWrapper);
+});
+
+
+

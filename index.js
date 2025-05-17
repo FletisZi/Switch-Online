@@ -23,12 +23,15 @@ app.get('/', (req, res) => {
 
 app.get('/switch', SwitchController.listSwitchs);
 
-app.post('/switch',SwitchController.addNewSwitch)
+app.post('/addswitch',SwitchController.addNewSwitch)
 
 app.get('/port', portController.listPorts)
 
 app.post('/port', portController.addNewPort)
 
+app.get('/cadastro', (req, res) => {res.sendFile(__dirname + '/public/postSwitch.html')})
+
+app.get('/listSwitch', (req, res) => {res.sendFile(__dirname + '/public/switch.html')})
 
 
 app.listen(PORT, () => {

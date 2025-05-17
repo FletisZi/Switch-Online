@@ -1,0 +1,39 @@
+.forms{
+    width: 80vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0px auto;
+    gap: 3rem;
+    margin-top: 3rem;
+
+}
+
+.forms div{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.forms input{
+    font-family: monospace;
+    font-size: 1.25rem;
+    width: 60%;
+    height: 40px;
+    background-color: #00000000;
+    border: #3E444D solid 1px;
+    border-radius: 8px;
+    color: #FFFFDF;
+    padding-left: 10px;
+    
+}
+
+.forms button{
+    font-family: monospace;
+    font-size: 1.25rem;
+    padding: 4px 0.5rem;
+    height: 30px;
+    background-color: #3C7C3B;
+    border-radius: 8px;
+    border: none;
+    color: #FFFFDF;
+}

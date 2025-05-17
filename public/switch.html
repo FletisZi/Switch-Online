@@ -1,0 +1,57 @@
+ <!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Novo Switchs</title>
+    <link rel="stylesheet" href="./styles/header.css">
+    <link rel="stylesheet" href="./styles/titles.css">
+    <link rel="stylesheet" href="./styles/forms.css">
+    <link rel="stylesheet" href="./styles/listSwitch.css">
+    <link rel="stylesheet" href="./styles/buttons.css">
+    <link rel="stylesheet" href="./style.css">
+  </head>
+
+  <body>
+    <header class="header ha">
+        <label class="tilte-1">Lista switch</label>
+        <button class="btnAddSwitch btn-1" id="btnAddSwitch">Novo</button>
+    </header>
+    <main>
+
+      <ul id="listSwitchs" class="listSwitchs">
+      </ul>
+    </main>
+  </body>
+
+  <script type="module" defer>
+    import {getSwitchs} from "./js/api.js"
+    const btnAddSwitch = document.querySelector("#btnAddSwitch")
+    const ulElement = document.querySelector("#listSwitchs")
+    
+    btnAddSwitch.addEventListener('click', ()=>{
+        window.location.href = "/cadastro";
+    })
+
+    window.addEventListener('load', ()=>{
+        createListSwitch()
+    })
+
+    async function createListSwitch(){
+        const arraySwitchs = await getSwitchs();
+        
+        await arraySwitchs.forEach( element => {
+            createLi(element.nome, element.ip)
+        });
+    }
+
+    function createLi(nome,ip){
+        ulElement.innerHTML +=`
+        <li class="liSwitch tilte-3" >
+          ${nome} <span>${ip}</span><button class="btn-1 min" id="btnDelete">excluir</button>
+        </li>
+        `
+    }
+  </script>
+
+</html>

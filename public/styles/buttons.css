@@ -1,0 +1,14 @@
+.btn-1{
+    font-family: monospace;
+    font-size: 1.25rem;
+    padding: 4px 0.5rem;
+    height: 30px;
+    background-color: #3C7C3B;
+    border-radius: 8px;
+    border: none;
+    color: #FFFFDF;
+}
+
+.btn-1.min{
+    font-size: 0.8rem;
+}

@@ -13,6 +13,7 @@ const listSwitchs = async ( req ,res ) => {
 
 const addNewSwitch = async (req, res) => {
     const { nome, ip } = req.body;
+    console.log(nome,ip)
     if (!nome || !ip ) {
         return res.status(400).json({ erro: 'Campos obrigatórios: nome, ip' });
     }

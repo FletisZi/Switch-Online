@@ -1,0 +1,71 @@
+ <!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Novo Switchs</title>
+    <link rel="stylesheet" href="./styles/header.css">
+    <link rel="stylesheet" href="./styles/titles.css">
+    <link rel="stylesheet" href="./styles/forms.css">
+    <link rel="stylesheet" href="./styles/listSwitch.css">
+    <link rel="stylesheet" href="./styles/buttons.css">
+    <link rel="stylesheet" href="./style.css">
+  </head>
+
+  <body>
+    <header class="header ha">
+        <label class="tilte-1">Adicionar Switch</label>
+    </header>
+    <main>
+      
+        <form id="switchForm" class="forms">
+            <div>
+                <label for="local" class="tilte-2">Local</label>
+                <input type="text" id="local" name="local" required />
+            </div>
+
+            <div>
+                <label for="ip" class="tilte-2">IP</label>
+                <input type="text" id="ip" name="ip" required />
+            </div>
+
+            <button type="submit">Cadastrar</button>
+        </form>
+        <p id="mensagem"></p>
+
+    </main>
+  </body>
+
+  <script>
+    document.getElementById('switchForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const nome = document.getElementById('local').value;
+      const ip = document.getElementById('ip').value;
+
+      try {
+        const response = await fetch('/addswitch', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ "nome":nome, "ip":ip,}) // você pode ajustar o status se quiser
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          document.getElementById('mensagem').textContent = '✅ Switch cadastrado com sucesso!';
+          document.getElementById('switchForm').reset();
+          window.location.href = "/listswitch";
+        } else {
+          document.getElementById('mensagem').textContent = '❌ Erro ao cadastrar: ' + (data.erro || 'Tente novamente');
+        }
+      } catch (error) {
+        document.getElementById('mensagem').textContent = '❌ Erro de conexão com o servidor.';
+        console.log(error);
+      }
+    });
+  </script>
+
+</html>

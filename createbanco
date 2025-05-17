@@ -23,7 +23,8 @@ CREATE TABLE switch (
 
 criar nova porta
 
-Invoke-WebRequest -Uri "http://10.100.54.144:3001/port" `
->>    -Method POST `
->>   -Body '{"id_switch":"1","nome":"1","vlan":"54","pdv":"teste","ip":"dhcp","path_panel":"00"}' `
->>    -ContentType "application/json"
+Invoke-WebRequest -Uri "http://10.100.54.144:3001/port" `    -Method POST `
+   -Body '{"id_switch":"1","nome":"1","vlan":"54","pdv":"teste","ip":"dhcp","path_panel":"00"}' `
+    -ContentType "application/json"
+
+    Invoke-WebRequest -Uri "http://192.168.0.8:3001/addswitch" ` -Method POST ` -Body '{"nome":"choperia","ip":"10"}' `-ContentType "application/json
