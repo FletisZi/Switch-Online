@@ -33,7 +33,7 @@
       <section class="result-info showResult"></section>
     </main>
 
-    <script>
+    <script defer>
       // Scroll com clique e arraste
       const container = document.getElementById("container");
       let isDragging = false;
@@ -68,6 +68,7 @@
         container.scrollLeft = scrollLeft - walkX;
         container.scrollTop = scrollTop - walkY;
       });
+      
     </script>
   </body>
 
