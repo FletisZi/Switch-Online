@@ -47,6 +47,7 @@ const stateClicked = async (state,id_switch) => {
           </div>    
       `;
       const datalist = document.getElementById("Local");
+
       document.getElementById('portUpdateForms').addEventListener('submit', async (e) => {
       e.preventDefault();
 
@@ -69,7 +70,7 @@ const stateClicked = async (state,id_switch) => {
         const data = await response.json();
 
         if (response.ok) {
-          alert('deru bom');
+          alert('✅ Local alterado com sucesso');
         } else {
           alert('❌ Erro ao cadastrar: ' + (data.erro || 'Tente novamente'));
         }

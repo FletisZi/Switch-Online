@@ -48,9 +48,6 @@ const updatePort = async ({id_switch ,nome ,pdv }) => {
     }
 };
 
-
-
-
 module.exports = {
     getAllPort,
     addNewPort,
