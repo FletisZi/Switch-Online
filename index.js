@@ -29,6 +29,8 @@ app.get('/port', portController.listPorts)
 
 app.post('/port', portController.addNewPort)
 
+app.post('/updateport', portController.atualizarPort)
+
 app.get('/cadastro', (req, res) => {res.sendFile(__dirname + '/public/postSwitch.html')})
 
 app.get('/listSwitch', (req, res) => {res.sendFile(__dirname + '/public/switch.html')})

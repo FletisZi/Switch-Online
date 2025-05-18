@@ -23,7 +23,36 @@ const addNewPort = async ({id_switch,nome,vlan, pdv, ip, path_panel}) => {
         throw new Error('Erro ao cadastrar o switch');
     }
 }
+
+
+const updatePort = async ({id_switch ,nome ,pdv }) => {
+    try {
+        const selectResult = await pool.query(
+            `SELECT id FROM port WHERE name = $1 AND id_switch = $2`,
+            [nome, id_switch]
+        );
+        if (selectResult.rowCount === 0) {
+            console.log('Porta não encontrada');
+            return null;
+        }
+        const id = selectResult.rows[0].id;
+        // Agora atualizamos o campo pdv usando o ID encontrado
+        const updateResult = await pool.query(
+            `UPDATE port SET pdv = $1 WHERE id = $2 RETURNING *`,
+            [pdv, id]
+        );
+        return updateResult.rows[0];
+    } catch (err) {
+        console.error('Erro ao atualizar porta', err);
+        return null;
+    }
+};
+
+
+
+
 module.exports = {
     getAllPort,
-    addNewPort
+    addNewPort,
+    updatePort
 }

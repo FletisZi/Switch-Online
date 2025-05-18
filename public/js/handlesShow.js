@@ -36,19 +36,48 @@ const stateClicked = async (state,id_switch) => {
   if (result) {
       showResult.classList.add("Show");
       showResult.innerHTML = `
-          <div>
-            <div>Porta: ${id}</div>
-            <div>PDV: ${result.pdv}</div>
+          <form id="portUpdateForms">
+            <div id="idPortUpdate" setPort="${result.name}">Porta: ${id}</div>
             <div>VLAN: ${result.vlan}</div>
             <div>IP: ${result.ip}</div>
             <label>LOCAL:
-              <input list="Local"  value="${result.PDV}" />
-              <datalist id="Local">
-              </datalist>
+              <input type="text"  value="${result.pdv}" id="inputPDV" />
             </label>
+            <button type="submit">Salvar</button>
           </div>    
       `;
       const datalist = document.getElementById("Local");
+      document.getElementById('portUpdateForms').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const pdv = document.getElementById('inputPDV').value;
+      const id = document.getElementById('idPortUpdate').getAttribute("setPort");
+
+      const selectedOption = [...switchList.options].find(opt => opt.value === switchInput.value);
+      const switchId = selectedOption.getAttribute('id_switch');
+
+
+      try {
+        const response = await fetch('/updateport', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ "id_switch":switchId, "nome":id,"pdv":pdv})
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          alert('deru bom');
+        } else {
+          alert('❌ Erro ao cadastrar: ' + (data.erro || 'Tente novamente'));
+        }
+      } catch (error) {
+        document.getElementById('mensagem').textContent = '❌ Erro de conexão com o servidor.';
+        console.log(error);
+      }
+    });
 
       // resultPdvs.forEach(namePdvs => {
       //   const option = document.createElement("option");
@@ -192,8 +221,6 @@ function removeAllForeignObjects() {
   all.forEach((f) => f.remove());
 }
 
-
-
 function createNewPort(id){
   
   const showResult = document.querySelector('.showResult')
@@ -211,3 +238,4 @@ function createNewPort(id){
 
 
 }
+
