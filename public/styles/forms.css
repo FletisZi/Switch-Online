@@ -26,6 +26,18 @@
     padding-left: 10px;
     
 }
+.forms.tow input{
+    font-family: monospace;
+    font-size: 1.25rem;
+    width: 80%;
+    height: 40px;
+    background-color: #00000000;
+    border: #3E444D solid 1px;
+    border-radius: 8px;
+    color: #FFFFDF;
+    padding-left: 10px;
+    
+}
 
 .forms button{
     font-family: monospace;

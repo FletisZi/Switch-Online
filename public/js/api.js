@@ -1,5 +1,5 @@
-const API_BASE_URL = "http://192.168.0.8:3001";  // house
-// const API_BASE_URL = "http://10.100.54.144:3001";  //devwork
+// const API_BASE_URL = "http://192.168.0.8:3001";  // house
+const API_BASE_URL = "http://10.100.54.144:3001";  //devwork
 
 export async function getSwitchs() {
     try {

@@ -28,6 +28,7 @@ export function renderPorts (id_switch) {
 };
 
 const stateClicked = async (state,id_switch) => {
+
   const id = state.id
   const showResult = document.querySelector('.showResult')
   const resultData = await getPortsInSwitch(id_switch);
@@ -86,7 +87,6 @@ const stateClicked = async (state,id_switch) => {
   }
 };
 
-
 function renderPortETH() {
   const ports = document.querySelectorAll(".portEth");
 
@@ -130,8 +130,6 @@ function renderPortETH() {
 
       button.addEventListener("click", (e) => {
         e.stopPropagation(); // impede que o clique feche o botão
-        //alert("Botão clicado!");
-        console.log(el.getAttribute("id_port"))
         createNewPort(el.getAttribute("id_port"))
       });
 
@@ -152,21 +150,27 @@ function removeAllForeignObjects() {
   all.forEach((f) => f.remove());
 }
 
-function createNewPort(id){
+function createNewPort(id, id_switch){
   
   const showResult = document.querySelector('.showResult')
 
   showResult.classList.add("Show");
   showResult.innerHTML = `
-      <div>
-        <div>Porta: ${id}</div>
-        <div>PDV: </div>
-        <div>VLAN: </div>
-        <div>IP: </div>
-    
-      </div>    
+
+    <form class="forms tow" id="addPortForms">
+      <div>Porta: ${id}</div>
+      <label>PDV : <input type="text" placeholder="Insira o local" id="inputPDV"></label>      
+      <label>VLAN : <input type="text" placeholder="Insira qual vlan esta passando" id="inputVLAN"></label>
+      <label>IP : <input type="text" placeholder="Insira qual IP esta passando" id="inputIP"></label>
+      <button type="submit" >Salvar</button>
+    </div>    
   `;
 
+  document.getElementById('addPortForms').addEventListener('submit', async (e) => { 
+    e.preventDefault();
+    console.log(document.getElementById('inputPDV').value,document.getElementById('inputVLAN').value,document.getElementById('inputIP').value)
+  
+  });
 
 }
 
