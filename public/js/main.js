@@ -29,7 +29,6 @@ btnSearch.addEventListener('click', async (e) => {
     await renderPorts(switchId);
 });
 
-
 window.addEventListener('load', () => {
   renderSwitch(image);
   centerSwitchShow();

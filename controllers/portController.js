@@ -1,4 +1,5 @@
 const portModel = require('../models/portModel')
+
 const listPorts = async (req,res)=>{
     try{  
         const { id } = req.query
@@ -8,7 +9,6 @@ const listPorts = async (req,res)=>{
         res.status(500).json({ err: 'Erro interno no servidor' });
     }
 }
-
 
 const addNewPort = async (req,res) => {
 
@@ -25,7 +25,6 @@ const addNewPort = async (req,res) => {
         res.status(500).json({ erro: 'Erro ao cadastrar o switch' });
     }
 }
-
 
 const atualizarPort = async (req, res) => { 
     const { id_switch, nome, pdv} = req.body;
