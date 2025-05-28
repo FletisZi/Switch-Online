@@ -14,6 +14,7 @@ const addNewPort = async (req,res) => {
 
     const { id_switch,nome,vlan, pdv, ip, path_panel } = req.body;
 
+
     if (!id_switch || !nome || !vlan || !pdv  || !ip || !path_panel) {
         return res.status(400).json({ erro: 'Campos obrigatórios: id_switch,nome,vlan, pdv, ip, path_panel' });
     }

@@ -49,3 +49,32 @@
     border: none;
     color: #FFFFDF;
 }
+
+.labelAdd{
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+/* .showResult.Show{
+  padding: 6rem 2rem;
+  background-color: #201f21fa;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 5px;
+  color: #FFF;
+  border: 10px #afaba7 ridge;
+}
+.showResult div{
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  gap: 2rem;
+  font-family: monospace;
+  font-size: 16px;
+  letter-spacing: 4px;
+} */

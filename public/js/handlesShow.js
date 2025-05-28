@@ -150,7 +150,7 @@ function removeAllForeignObjects() {
   all.forEach((f) => f.remove());
 }
 
-function createNewPort(id, id_switch){
+function createNewPort(id){
   
   const showResult = document.querySelector('.showResult')
 
@@ -159,17 +159,26 @@ function createNewPort(id, id_switch){
 
     <form class="forms tow" id="addPortForms">
       <div>Porta: ${id}</div>
-      <label>PDV : <input type="text" placeholder="Insira o local" id="inputPDV"></label>      
-      <label>VLAN : <input type="text" placeholder="Insira qual vlan esta passando" id="inputVLAN"></label>
-      <label>IP : <input type="text" placeholder="Insira qual IP esta passando" id="inputIP"></label>
+      <label class="labelAdd">PDV : <input type="text" placeholder="Insira o local" id="inputPDV"></label>      
+      <label class="labelAdd">VLAN : <input type="text" placeholder="Insira qual vlan esta passando" id="inputVLAN"></label>
+      <label class="labelAdd">IP : <input type="text" placeholder="Insira qual IP esta passando" id="inputIP"></label>
+      <label class="labelAdd">IP : <input type="text" placeholder="Insira qual IP esta passando" id="InputPath_panel"></label>
       <button type="submit" >Salvar</button>
     </div>    
   `;
 
   document.getElementById('addPortForms').addEventListener('submit', async (e) => { 
     e.preventDefault();
-    console.log(document.getElementById('inputPDV').value,document.getElementById('inputVLAN').value,document.getElementById('inputIP').value)
-  
+    
+    const PDV = document.querySelector("#inputPDV").value;
+    const VLAN = document.querySelector("#inputVLAN").value;
+    const IP = document.querySelector("#inputIP").value;
+    const path_panel = document.querySelector("#InputPath_panel").value;
+    const selectedOption = [...switchList.options].find(opt => opt.value === switchInput.value);
+    const switchId = selectedOption.getAttribute('id_switch');
+
+    fetchPostNewPortETH({switchId,id,VLAN,PDV,IP,path_panel})
+    
   });
 
 }
@@ -191,4 +200,42 @@ function showRJPort (elRJ45){
           el.style.display = "flex";
         }
   });
+}
+
+
+async function fetchPostNewPortETH({ switchId, id, VLAN, PDV, IP, path_panel }) {
+  try {
+    const response = await fetch('/port', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        id_switch: switchId,
+        nome: id,
+        vlan: VLAN,
+        pdv: PDV,
+        ip: IP,
+        path_panel: path_panel,
+      }),
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      alert('✅ Porta Inserida com sucesso');
+      const showResult = document.querySelector('.showResult');
+      if (showResult) {
+        showResult.innerHTML = '';
+        showResult.classList.remove('Show');
+      }
+
+      renderPorts(switchId);
+    } else {
+      alert('❌ Erro ao cadastrar: ' + (data.erro || 'Tente novamente'));
+    }
+  } catch (error) {
+    document.getElementById('mensagem').textContent = '❌ Erro de conexão com o servidor.';
+    console.error(error);
+  }
 }
